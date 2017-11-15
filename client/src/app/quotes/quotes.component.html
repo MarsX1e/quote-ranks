@@ -1,0 +1,15 @@
+<h1>Add a Quote</h1>
+<form  #form="ngForm" (submit)="quotecreate();form.reset()">
+  <p><textarea name="text" type="text" required minlength="4" [(ngModel)]="quote.text" #text="ngModel"></textarea><span *ngIf="text.dirty&&text.invalid&&text.errors.required">Quote is required</span><span *ngIf="text.invalid&&text.errors.minlength">Quote has to be at least 4 charactors</span></p>
+  <p>Author:<input name="author" type="text" required minlength="1" [(ngModel)]="quote.author" #author="ngModel"><span *ngIf="author.invalid&&author.dirty&&author.errors.required">Author is required</span><span *ngIf="author.invalid&&author.errors.minlength">Author has to be at least 1 charactors</span></p>
+  <p><input type="submit" value="Add Quote" [disabled]="form.invalid"></p>
+  </form>
+{{text.errors|json}}
+{{author.errors|json}}
+{{quote|json}}
+{{quotes|json}}
+
+<h1>Quotes List</h1>
+<div *ngFor="let quote of quotes">
+    <app-singlequote [quote]="quote" (voteup)="increase($event)"(votedown)="decrease($event)" (delete)="delete($event)"></app-singlequote>
+</div>
